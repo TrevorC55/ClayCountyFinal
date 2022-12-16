@@ -1,6 +1,5 @@
-<?php
-include 'dbh.php';
-?>
+
+<?php include 'dbh.php';?>
 <?php
     $FNG = "";
     $LNG = "";
@@ -8,11 +7,6 @@ include 'dbh.php';
     $Date = "";
     $LS = "";
     $OP = "";
-    $queryResult = 0;
-
-$sql = "SELECT * FROM ccdb_xls";
-$result = mysqli_query($conn, $sql);
-$queryResults = mysqli_num_rows($result);
 ?>
 
 </div>
@@ -46,7 +40,6 @@ $queryResults = mysqli_num_rows($result);
               <input type = "text" name = "search" placeholder="Search">
             <button type = "submit" name = "submit-search">Search</button>
             </form>
-            <?php echo "There are " .$queryResult. " results!"; ?>
       </p>
     </fieldset>
   
@@ -54,10 +47,10 @@ $queryResults = mysqli_num_rows($result);
     <?php
         if (isset($_POST['submit-search'])){
             $search = mysqli_real_escape_string($conn, $_POST['search']);
-            $sql = "SELECT * FROM ccdb_xls WHERE Last_Name_Grantor_1 LIKE '%$search%' OR First_Name_Grantor_1 LIKE '%$search%'";
+            $sql = "SELECT * FROM ccdb_xls WHERE Last_Name_Grantor_1 LIKE '%$search%' OR First_Name_Grantor_1 LIKE '%$search%' OR LOT LIKE '%$search%'";
             $result = mysqli_query($conn, $sql);
             $queryResult = mysqli_num_rows($result);
-
+        }
 
 if ($queryResult > 0){
     while($row = mysqli_fetch_assoc($result)){
@@ -67,10 +60,7 @@ if ($queryResult > 0){
         $LS = $row['SEC'];
         $OP = $row['LOT'];
     ;}
-}else{
-    echo "There are no results matching your search!";
-}
-        }
+    }
 
         if ($LNG === null) $LNG = "null";
         if ($FNG === null) $FNG = "null";
@@ -106,7 +96,7 @@ if ($queryResult > 0){
        <fieldset id='Map'>
      <legend>Map</legend>
       <script src="Map.js"></script>
-          
+      <img src="./img/ClayCountyMapTRS#4.png" alt="Clay County Map">
     </fieldset>
       </div>
 
@@ -118,14 +108,7 @@ if ($queryResult > 0){
   <p>Ⓒ2022 Gamers Incorportated Limited</p>
 </div>
 
-<!--
-<form action = "search.php" method = "POST">
-    <input type = "text" name = "search" placeholder="Search">
-<button type = "submit" name = "submit-search">Search</button>
-</form>
--->
 </div>
 
 </body>
 </html>
-
